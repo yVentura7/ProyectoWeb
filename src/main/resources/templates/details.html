@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="'Detalles de ' + ${recipe.name}">Detalles de la Receta</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .details-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin: 20px;
+        }
+
+        .details-content {
+            flex: 2;
+        }
+
+        .details-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .details-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <h1 th:text="${recipe.name}">Nombre de la Receta</h1>
+    <div class="details-container">
+        <div class="details-content">
+            <p><strong>Descripción:</strong></p>
+            <p th:text="${recipe.description}">Descripción aquí...</p>
+
+            <p><strong>Ingredientes:</strong></p>
+            <p th:text="${recipe.ingredients}">Ingredientes aquí...</p>
+
+            <p><strong>Pasos:</strong></p>
+            <p th:text="${recipe.steps}">Pasos aquí...</p>
+        </div>
+        <div class="details-image">
+            <img th:src="@{${recipe.imageUrl}}" alt="Imagen de la receta">
+        </div>
+    </div>
+    <a href="/recipes">Volver a la lista de recetas</a>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipes</title>
+    <!-- Estilo con Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <style>
+        .table td, .table th {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4 text-center">Recipes</h1>
+
+        <!-- Formulario de búsqueda y filtros -->
+        <form method="get" action="/recipes">
+            <div class="row mb-4">
+                <!-- Campo de búsqueda -->
+                <div class="col-md-4">
+                    <label for="name" class="form-label">Search by Name:</label>
+                    <input type="text" id="name" name="name" 
+                           class="form-control" th:value="${selectedName}" placeholder="Enter recipe name">
+                </div>
+
+                <!-- Combobox de lugar de origen -->
+                <div class="col-md-4">
+                    <label for="origin" class="form-label">Filter by Origin:</label>
+                    <select id="origin" name="origin" class="form-select">
+                        <option value="">All</option>
+                        <th:block th:each="origin : ${origins}">
+                            <option th:value="${origin}" 
+                                    th:selected="${selectedOrigin == origin}" 
+                                    th:text="${origin}"></option>
+                        </th:block>
+                    </select>
+                </div>
+
+                <!-- Botón de búsqueda -->
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Tabla de recetas -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Origin</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="recipe : ${recipes}">
+                    <th scope="row" th:text="${recipe.id}"></th>
+                    <td th:text="${recipe.name}"></td>
+                    <td th:text="${recipe.origin}"></td>
+                    <td th:text="${recipe.description}"></td>
+                    <td>
+                        <!-- Enlace para ver más detalles -->
+                        <a th:href="@{/recipes/{id}(id=${recipe.id})}" class="btn btn-info btn-sm">View Details</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS para interactividad -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
